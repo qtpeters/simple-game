@@ -1,21 +1,27 @@
 
+const path = require( 'path' );
+
 const HtmlWebpackPlugin = require( 'html-webpack-plugin' );
 const hwpCfg = new HtmlWebpackPlugin({
-  filename: 'index.html'
+  filename: 'index.html',
+  template: `${__dirname}/src/template.html`
 }); 
 
 module.exports = {
-  entry: `${__dirname}/src/index.js`,
+  entry: `${__dirname}/src/entry.js`,
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 9000
+  },
   module: {
-    rules: [
-      {
-        test: /\.js$/,
+    rules: [{
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader"
         }
-      }
-    ]
+      }]
   },
   output: {
     filename: 'app.js',
